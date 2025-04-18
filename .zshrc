@@ -1,6 +1,6 @@
 # Set up the prompt
 # ZSH_THEME=''
-PROMPT='%~ '
+PROMPT='%m%~ '
 
 # autoload -Uz promptinit
 # promptinit
