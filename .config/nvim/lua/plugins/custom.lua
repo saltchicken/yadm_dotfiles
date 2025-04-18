@@ -24,4 +24,5 @@ return {
       { "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
     },
   },
+  { "augmentcode/augment.vim" },
 }
