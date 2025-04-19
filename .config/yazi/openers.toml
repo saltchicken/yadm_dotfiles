@@ -1,7 +1,7 @@
 [default]
 run = [
   { exec = "nvim", block = true, for = ["text/*", "*.md", "*.txt"] },
-  { exec = "mpv",  block = false, for = ["video/*"] },
+  { exec = "mpv", block = false, for = ["video/*", "*.mp4", "*.mkv", "*.webm"] },
   { exec = "xdg-open", block = false }
 ]
 
