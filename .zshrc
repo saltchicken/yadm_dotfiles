@@ -65,3 +65,6 @@ zinit light-mode for \
 ### End of Zinit's installer chunk
 zinit light zsh-users/zsh-autosuggestions
 
+
+. "$HOME/.local/bin/env"
+eval "$(zoxide init zsh)"
