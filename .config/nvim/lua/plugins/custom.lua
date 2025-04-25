@@ -25,4 +25,5 @@ return {
     },
   },
   { "augmentcode/augment.vim" },
+  { "vuciv/golf" },
 }
