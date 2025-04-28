@@ -68,3 +68,5 @@ zinit light zsh-users/zsh-autosuggestions
 
 . "$HOME/.local/bin/env"
 eval "$(zoxide init zsh)"
+
+set -o vi
