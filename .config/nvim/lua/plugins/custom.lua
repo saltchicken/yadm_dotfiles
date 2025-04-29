@@ -1,5 +1,15 @@
 return {
-  { "craftzdog/solarized-osaka.nvim", lazy = false, priority = 1000, opts = {} },
+  {
+    "craftzdog/solarized-osaka.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {
+      transparent = true,
+      on_highlights = function(hl, c)
+        hl.CursorLine = { bg = "#1E2229" }
+      end,
+    },
+  },
   {
     "LazyVim/LazyVim",
     opts = {
