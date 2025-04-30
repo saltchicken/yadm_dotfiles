@@ -23,11 +23,19 @@ for key, value in pairs(paths_to_check) do
   end
 end
 
--- check if server is already running in godot project path
-local is_server_running = vim.uv.fs_stat(godot_project_path .. "/server.pipe")
+-- local pipe_path = godot_project_path .. "server.pipe" -- check if server is already running in godot project path
+-- local pipe_path = "/tmp/godot_nvim_" .. vim.fn.fnamemodify(godot_project_path, ":t:r") .. ".pipe"
+local godot_project_folder = vim.fn.fnamemodify(godot_project_path, ":t")
+local project_name = vim.fn.fnamemodify(godot_project_path:gsub("/$", ""), ":t")
+-- local temp_godot_project_folder = "/tmp/" .. project_name
+local temp_godot_project_folder = "/tmp" .. godot_project_path
+vim.fn.mkdir(temp_godot_project_folder, "p")
+local pipe_path = temp_godot_project_folder .. "/server.pipe"
+
+local is_server_running = vim.uv.fs_stat(pipe_path)
 -- start server, if not already running
 if is_godot_project and not is_server_running then
-  vim.fn.serverstart(godot_project_path .. "/server.pipe")
+  vim.fn.serverstart(pipe_path)
 end
 
 if is_godot_project then
