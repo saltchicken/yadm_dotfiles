@@ -6,8 +6,12 @@ vim.opt.laststatus = 0
 vim.keymap.set("n", "<leader>ac", ":Augment chat<CR>", { noremap = true, silent = true })
 vim.keymap.set("v", "<leader>ac", ":Augment chat<CR>", { noremap = true, silent = true })
 
+vim.keymap.set("n", "<Tab>", "<cmd>BufferLineCycleNext<CR>", {})
+vim.keymap.set("n", "<S-Tab>", "<cmd>BufferLineCyclePrev<CR>", {})
+vim.keymap.set("n", "<leader>bd", "<cmd>bdelete<CR>", { desc = "[B]uffer [D]elete" })
+
 -- vim.g.augment_workspace_folders = { "~/workspace" }
-vim.g.augment_workspace_folders = { "~/.local/share/godot/projects/" }
+vim.g.augment_workspace_folders = { "~/workspace/first_3d_multiplayer/" }
 
 local paths_to_check = { "/", "/../" }
 local is_godot_project = false
