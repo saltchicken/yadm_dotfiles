@@ -10,6 +10,10 @@ vim.keymap.set("n", "<Tab>", "<cmd>BufferLineCycleNext<CR>", {})
 vim.keymap.set("n", "<S-Tab>", "<cmd>BufferLineCyclePrev<CR>", {})
 vim.keymap.set("n", "<leader>bd", "<cmd>bdelete<CR>", { desc = "[B]uffer [D]elete" })
 
+vim.keymap.set("n", "<leader>db", function()
+  Snacks.dashboard()
+end, { desc = "Show Dashboard" })
+
 -- vim.g.augment_workspace_folders = { "~/workspace" }
 vim.g.augment_workspace_folders = { "~/workspace/first_3d_multiplayer/" }
 
