@@ -7,6 +7,7 @@ return {
       transparent = true,
       on_highlights = function(hl, c)
         hl.CursorLine = { bg = "#1E2229" }
+        hl.Folded = { bg = "#1E2229" }
       end,
     },
   },
