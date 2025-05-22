@@ -67,6 +67,5 @@ return {
       { "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
     },
   },
-  { "augmentcode/augment.vim" },
-  { "vuciv/golf" },
+  -- { "vuciv/golf" },
 }
