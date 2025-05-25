@@ -36,6 +36,11 @@ return {
 
       lualine.hide()
     end,
+
+    keys = {
+      { "<leader>mh", "<cmd>LualineHide<cr>", desc = "Hide Lualine" },
+      { "<leader>ms", "<cmd>LualineShow<cr>", desc = "Show Lualine" },
+    },
   },
   {
     "danilamihailov/beacon.nvim",
