@@ -8,6 +8,8 @@ return {
       on_highlights = function(hl, c)
         hl.CursorLine = { bg = "#1E2229" }
         hl.Folded = { bg = "#1E2229" }
+        hl.StatusLine = { bg = "#1E2229" }
+        hl.StatusLineNC = { bg = "#1E2229" }
       end,
     },
   },
