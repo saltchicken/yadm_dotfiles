@@ -70,3 +70,5 @@ zinit light zsh-users/zsh-autosuggestions
 eval "$(zoxide init zsh)"
 
 set -o vi
+
+export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
