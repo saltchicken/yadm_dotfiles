@@ -124,5 +124,6 @@ return {
       })
     end,
   },
+  { "augmentcode/augment.vim" },
   -- { "vuciv/golf" },
 }
