@@ -145,9 +145,6 @@ return {
     },
     { -- optional saghen/blink.cmp completion source
       "saghen/blink.cmp",
-      dependencies = { {
-        "Exafunction/windsurf.nvim",
-      } },
       opts = {
         sources = {
           default = { "lsp", "path", "snippets", "buffer" },

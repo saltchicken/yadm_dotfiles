@@ -19,7 +19,7 @@ vim.keymap.set("n", "<leader>hp", function()
   Snacks.dashboard()
 end, { desc = "Show Dashboard" })
 
-vim.keymap.set("n", "<leader>db", ":DBUI<CR>", { desc = "Open DBUI" })
+vim.keymap.set("n", "<leader>db", ":DBUIToggle<CR>", { desc = "Open DBUI" })
 
 -- local paths_to_check = { "/", "/../" }
 -- local is_godot_project = false
