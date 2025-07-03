@@ -15,9 +15,11 @@ vim.keymap.set("n", "<Tab>", "<cmd>BufferLineCycleNext<CR>", {})
 vim.keymap.set("n", "<S-Tab>", "<cmd>BufferLineCyclePrev<CR>", {})
 vim.keymap.set("n", "<leader>bd", "<cmd>bdelete<CR>", { desc = "[B]uffer [D]elete" })
 
-vim.keymap.set("n", "<leader>db", function()
+vim.keymap.set("n", "<leader>hp", function()
   Snacks.dashboard()
 end, { desc = "Show Dashboard" })
+
+vim.keymap.set("n", "<leader>db", ":DBUI<CR>", { desc = "Open DBUI" })
 
 -- local paths_to_check = { "/", "/../" }
 -- local is_godot_project = false
