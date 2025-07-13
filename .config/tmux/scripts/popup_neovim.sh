@@ -14,7 +14,7 @@ nvim -c 'set nonumber norelativenumber wrap' \
 CONTENT=$(cat "$PROMPT_FILE")
 SYSTEM_MESSAGE=$(cat "$SYSTEM_MESSAGE_FILE")
 
-OUTPUT=$(/home/saltchicken/.config/tmux/scripts/process_input.sh "$CONTENT")
+OUTPUT=$(/home/saltchicken/.config/tmux/scripts/process_input.sh "$CONTENT" "$SYSTEM_MESSAGE")
 
 OUTPUT_TMPFILE=$(mktemp)
 trap 'rm -f "$OUTPUT_TMPFILE"' EXIT
