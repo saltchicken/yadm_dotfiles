@@ -3,7 +3,7 @@
 TMPFILE=$(mktemp)
 trap 'rm -f "$TMPFILE"' EXIT
 
-nvim "$TMPFILE" >/dev/tty </dev/tty
+nvim -c 'set nonumber norelativenumber wrap' "$TMPFILE" >/dev/tty </dev/tty
 
 CONTENT=$(cat "$TMPFILE")
 
@@ -16,4 +16,4 @@ echo "$OUTPUT" >"$OUTPUT_TMPFILE"
 
 sleep 4
 
-nvim "$OUTPUT_TMPFILE" >/dev/tty </dev/tty
+nvim -c 'set nonumber norelativenumber wrap' "$OUTPUT_TMPFILE" >/dev/tty </dev/tty
