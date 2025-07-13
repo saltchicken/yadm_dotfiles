@@ -1,11 +1,18 @@
 #!/bin/bash
 
-TMPFILE=$(mktemp)
-trap 'rm -f "$TMPFILE"' EXIT
+PROMPT_FILE=$(mktemp)
+SYSTEM_MESSAGE_FILE=$(mktemp)
+trap 'rm -f "$PROMPT_FILE" "$SYSTEM_MESSAGE_FILE"' EXIT
 
-nvim -c 'set nonumber norelativenumber wrap' "$TMPFILE" >/dev/tty </dev/tty
+echo "System message content" >"$SYSTEM_MESSAGE_FILE"
 
-CONTENT=$(cat "$TMPFILE")
+nvim -c 'set nonumber norelativenumber wrap' \
+  -c "split $PROMPT_FILE" \
+  -c 'command! Send wa | qall' \
+  "$SYSTEM_MESSAGE_FILE" >/dev/tty </dev/tty
+
+CONTENT=$(cat "$PROMPT_FILE")
+SYSTEM_MESSAGE=$(cat "$SYSTEM_MESSAGE_FILE")
 
 OUTPUT=$(/home/saltchicken/.config/tmux/scripts/process_input.sh "$CONTENT")
 
@@ -14,6 +21,6 @@ trap 'rm -f "$OUTPUT_TMPFILE"' EXIT
 
 echo "$OUTPUT" >"$OUTPUT_TMPFILE"
 
-sleep 4
+# sleep 4
 
 nvim -c 'set nonumber norelativenumber wrap' "$OUTPUT_TMPFILE" >/dev/tty </dev/tty
