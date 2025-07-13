@@ -34,6 +34,8 @@ def main():
                 "-c",
                 "set nonumber norelativenumber wrap",
                 "-c",
+                "resize 20",
+                "-c",
                 f"split {prompt_file.name}",
                 "-c",
                 "command! Send wa | qall",
