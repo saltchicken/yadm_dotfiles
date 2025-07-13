@@ -27,7 +27,8 @@ def main():
             f.write("You are a helpful AI assistant.")
 
         # Open neovim for user to edit system message and prompt
-        nvim_path = "/opt/nvim-linux-x86_64/bin/nvim"
+
+        nvim_path = subprocess.check_output(["which", "nvim"], text=True).strip()
         subprocess.run(
             [
                 nvim_path,
