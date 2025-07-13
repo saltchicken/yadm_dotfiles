@@ -6,7 +6,7 @@ trap 'rm -f "$PROMPT_FILE" "$SYSTEM_MESSAGE_FILE"' EXIT
 
 echo "System message content" >"$SYSTEM_MESSAGE_FILE"
 
-nvim -c 'set nonumber norelativenumber wrap' \
+/opt/nvim-linux-x86_64/bin/nvim -c 'set nonumber norelativenumber wrap' \
   -c "split $PROMPT_FILE" \
   -c 'command! Send wa | qall' \
   "$SYSTEM_MESSAGE_FILE" >/dev/tty </dev/tty
@@ -23,4 +23,4 @@ echo "$OUTPUT" >"$OUTPUT_TMPFILE"
 
 # sleep 4
 
-nvim -c 'set nonumber norelativenumber wrap' "$OUTPUT_TMPFILE" >/dev/tty </dev/tty
+/opt/nvim-linux-x86_64/bin/nvim -c 'set nonumber norelativenumber wrap' "$OUTPUT_TMPFILE" >/dev/tty </dev/tty
