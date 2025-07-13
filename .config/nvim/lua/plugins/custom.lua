@@ -173,4 +173,5 @@ return {
       { "<leader>?", "<cmd>VimCoach<cr>", desc = "Vim Coach" },
     },
   },
+  { "akinsho/bufferline.nvim", enabled = false },
 }
