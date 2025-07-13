@@ -24,7 +24,7 @@ def main():
     try:
         # Write initial system message
         with open(system_message_file.name, "w") as f:
-            f.write("System message content")
+            f.write("You are a helpful AI assistant.")
 
         # Open neovim for user to edit system message and prompt
         nvim_path = "/opt/nvim-linux-x86_64/bin/nvim"
