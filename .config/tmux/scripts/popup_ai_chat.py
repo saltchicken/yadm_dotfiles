@@ -21,12 +21,14 @@ def main():
     # Create temporary files
     prompt_file = tempfile.NamedTemporaryFile(delete=False)
     system_message_file = tempfile.NamedTemporaryFile(delete=False)
+    context_file = tempfile.NamedTemporaryFile(delete=False)
     with open(system_message_file.name, "w") as f:
         f.write("You are a helpful AI assistant.")
 
     try:
         while True:
-            nvim_path = subprocess.check_output(["which", "nvim"], text=True).strip()
+            # nvim_path = subprocess.check_output(["which", "nvim"], text=True).strip()
+            nvim_path = "/opt/nvim-linux-x86_64/bin/nvim"
             result = subprocess.run(
                 [
                     nvim_path,
@@ -37,6 +39,14 @@ def main():
                     "-c",
                     f"split {prompt_file.name}",
                     "-c",
+                    "wincmd k",
+                    "-c",
+                    f"vsplit {context_file.name}",
+                    "-c",
+                    "FileSelector",
+                    "-c",
+                    "wincmd j",
+                    "-c",
                     "command! Send wa | qall | cquit 0",
                     "-c",
                     "command! Exit cquit 1",
@@ -45,7 +55,6 @@ def main():
                 stdin=sys.stdin,
                 stdout=sys.stdout,
             )
-
 
             if result.returncode != 0:
                 break
@@ -67,7 +76,12 @@ def main():
 
             # Display the response in neovim
             subprocess.run(
-                [nvim_path, "-c", "set nonumber norelativenumber wrap", output_file.name],
+                [
+                    nvim_path,
+                    "-c",
+                    "set nonumber norelativenumber wrap",
+                    output_file.name,
+                ],
                 stdin=sys.stdin,
                 stdout=sys.stdout,
             )
