@@ -174,4 +174,5 @@ return {
     },
   },
   { "akinsho/bufferline.nvim", enabled = false },
+  { "saltchicken/file-selector.nvim" },
 }
