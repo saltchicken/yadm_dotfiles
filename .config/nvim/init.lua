@@ -9,7 +9,7 @@ vim.keymap.set("v", "<leader>ac", ":Augment chat<CR>", { noremap = true, silent 
 vim.keymap.set("n", "<leader>at", ":Augment chat-toggle<CR>", { noremap = true, silent = true })
 vim.keymap.set("v", "<leader>at", ":Augment chat-toggle<CR>", { noremap = true, silent = true })
 
-vim.g.augment_workspace_folders = { "~/workspace/trader/" }
+vim.g.augment_workspace_folders = { "~/.config/tmux/" }
 
 vim.keymap.set("n", "<Tab>", "<cmd>BufferLineCycleNext<CR>", {})
 vim.keymap.set("n", "<S-Tab>", "<cmd>BufferLineCyclePrev<CR>", {})
