@@ -429,6 +429,13 @@ return {
     end,
   },
   {
+    "saltchicken/echo_lsp_server",
+    build = "./scripts/install.sh",
+    -- config = function()
+    --   require("lspconfig").setup()
+    -- end,
+  },
+  {
     "neovim/nvim-lspconfig",
     opts = function(_, opts)
       -- Register the custom LSP server configuration
@@ -440,7 +447,8 @@ return {
         configs.echo_lsp = {
           default_config = {
             cmd = {
-              vim.fn.stdpath("config") .. "/echo_lsp_server.py",
+              -- vim.fn.stdpath("config") .. "/echo_lsp_server.py",
+              vim.fn.stdpath("data") .. "/lazy/echo_lsp_server/scripts/launch.sh",
             },
             filetypes = { "text", "markdown", "lua", "python", "javascript", "typescript" },
             root_dir = function(fname)
