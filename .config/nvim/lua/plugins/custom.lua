@@ -428,6 +428,41 @@ return {
       end
     end,
   },
+  {
+    "neovim/nvim-lspconfig",
+    opts = function(_, opts)
+      -- Register the custom LSP server configuration
+      local lspconfig = require("lspconfig")
+      local configs = require("lspconfig.configs")
+
+      -- Register echo_lsp as a custom server if not already registered
+      if not configs.echo_lsp then
+        configs.echo_lsp = {
+          default_config = {
+            cmd = {
+              vim.fn.stdpath("config") .. "/echo_lsp_server.py",
+            },
+            filetypes = { "text", "markdown", "lua", "python", "javascript", "typescript" },
+            root_dir = function(fname)
+              return vim.fn.getcwd()
+            end,
+            settings = {},
+            single_file_support = true,
+          },
+          docs = {
+            description = "Simple Echo LSP Server for testing",
+          },
+        }
+      end
+
+      -- Add to servers list so LazyVim will set it up
+      opts.servers = vim.tbl_extend("force", opts.servers or {}, {
+        echo_lsp = {},
+      })
+
+      return opts
+    end,
+  },
   { "akinsho/bufferline.nvim", enabled = false },
   { "saltchicken/file-selector.nvim" },
 }
