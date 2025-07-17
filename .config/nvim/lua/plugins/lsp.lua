@@ -3,14 +3,13 @@ return {
     "saltchicken/echo_lsp_server",
     build = "./scripts/install.sh",
   },
+
   {
     "neovim/nvim-lspconfig",
     opts = function(_, opts)
-      -- Register the custom LSP server configuration
       local lspconfig = require("lspconfig")
       local configs = require("lspconfig.configs")
 
-      -- Register echo_lsp as a custom server if not already registered
       if not configs.echo_lsp then
         configs.echo_lsp = {
           default_config = {
@@ -30,66 +29,113 @@ return {
         }
       end
 
-      -- Add to servers list so LazyVim will set it up
       opts.servers = vim.tbl_extend("force", opts.servers or {}, {
         echo_lsp = {},
       })
+
       opts.diagnostics = {
         virtual_lines = true,
         underline = true,
         update_in_insert = false,
         virtual_text = false,
-        -- virtual_text = {
-        --   spacing = 4,
-        --   source = "if_many",
-        --   prefix = "●",
-        --   -- this will set set the prefix to a function that returns the diagnostics icon based on the severity
-        --   -- this only works on a recent 0.10.0 build. Will be set to "●" when not supported
-        --   -- prefix = "icons",
       }
 
-      -- Handler for ghost text notifications
+      -- Ghost Text Handler Setup
+      local ghost_ns = vim.api.nvim_create_namespace("echo_lsp_ghost_text")
+      local ghost_extmark = nil
+      local ghost_text = ""
+      local ghost_line = nil
+      local ghost_bufnr = nil
+
       vim.lsp.handlers["ghostText/virtualText"] = function(_, result)
         if not result or not result.uri then
           return
         end
+
         local bufnr = vim.uri_to_bufnr(result.uri)
         if not vim.api.nvim_buf_is_loaded(bufnr) then
           vim.fn.bufload(bufnr)
         end
-        local ns = vim.api.nvim_create_namespace("echo_lsp_ghost_text")
+
         local line = result.line or 0
         local text = result.text or ""
-
-        -- Clear previous ghost text on this line
-        vim.api.nvim_buf_clear_namespace(bufnr, ns, line, line + 1)
-
-        -- Get current cursor position
         local cursor_pos = vim.api.nvim_win_get_cursor(0)
+        local cursor_line = cursor_pos[1] - 1
         local cursor_col = cursor_pos[2]
 
-        -- Only show ghost text if we're on the same line as the cursor
-        local current_line = cursor_pos[1] - 1 -- Convert to 0-based
-        if line == current_line then
-          -- Set the ghost text at cursor position
-          vim.api.nvim_buf_set_extmark(bufnr, ns, line, cursor_col, {
+        vim.api.nvim_buf_clear_namespace(bufnr, ghost_ns, 0, -1)
+
+        if line == cursor_line then
+          ghost_extmark = vim.api.nvim_buf_set_extmark(bufnr, ghost_ns, line, cursor_col, {
             virt_text = { { text, "Comment" } },
-            virt_text_pos = "inline", -- This inserts the text inline at the cursor
+            virt_text_pos = "inline",
           })
+          ghost_text = text
+          ghost_line = line
+          ghost_bufnr = bufnr
         end
       end
+
+      -- Clear ghost text on any insert-related action
+      vim.api.nvim_create_autocmd({ "InsertCharPre", "CursorMovedI", "TextChangedI", "InsertLeave" }, {
+        callback = function()
+          if ghost_extmark and ghost_bufnr then
+            vim.api.nvim_buf_clear_namespace(ghost_bufnr, ghost_ns, 0, -1)
+            ghost_extmark = nil
+            ghost_text = ""
+            ghost_line = nil
+            ghost_bufnr = nil
+          end
+        end,
+      })
+
+      -- Shared access from init()
+      vim.g._echo_lsp_ghost_state = {
+        ns = ghost_ns,
+        extmark = function()
+          return ghost_extmark
+        end,
+        text = function()
+          return ghost_text
+        end,
+        line = function()
+          return ghost_line
+        end,
+        bufnr = function()
+          return ghost_bufnr
+        end,
+        clear = function()
+          if ghost_extmark and ghost_bufnr then
+            vim.api.nvim_buf_clear_namespace(ghost_bufnr, ghost_ns, 0, -1)
+          end
+          ghost_extmark = nil
+          ghost_text = ""
+          ghost_line = nil
+          ghost_bufnr = nil
+        end,
+        insert = function()
+          if ghost_extmark and ghost_bufnr and ghost_line then
+            local line_content = vim.api.nvim_buf_get_lines(ghost_bufnr, ghost_line, ghost_line + 1, false)[1]
+            local cursor_col = vim.api.nvim_win_get_cursor(0)[2]
+            local new_line = line_content:sub(1, cursor_col) .. ghost_text .. line_content:sub(cursor_col + 1)
+            vim.api.nvim_buf_set_lines(ghost_bufnr, ghost_line, ghost_line + 1, false, { new_line })
+            vim.api.nvim_buf_clear_namespace(ghost_bufnr, ghost_ns, 0, -1)
+            ghost_extmark = nil
+            ghost_text = ""
+            ghost_line = nil
+            ghost_bufnr = nil
+          end
+        end,
+      }
 
       return opts
     end,
 
-    -- Set up the keymap when the LSP attaches
     init = function()
-      -- Function to trigger ghost text
       local function trigger_ghost_text()
         local bufnr = vim.api.nvim_get_current_buf()
         local clients = vim.lsp.get_active_clients({ bufnr = bufnr })
 
-        -- Find the echo_lsp client
         local echo_client = nil
         for _, client in ipairs(clients) do
           if client.name == "echo_lsp" then
@@ -103,12 +149,10 @@ return {
           return
         end
 
-        -- Get current position
         local pos = vim.api.nvim_win_get_cursor(0)
-        local line = pos[1] - 1 -- Convert to 0-based
+        local line = pos[1] - 1
         local uri = vim.uri_from_bufnr(bufnr)
 
-        -- Send custom request to trigger ghost text
         echo_client.request("custom/triggerGhostText", {
           textDocument = { uri = uri },
           position = { line = line, character = 0 },
@@ -119,16 +163,28 @@ return {
         end, bufnr)
       end
 
-      -- Set up the keymap
+      -- Set keymaps on LSP attach
       vim.api.nvim_create_autocmd("LspAttach", {
         callback = function(args)
           local client = vim.lsp.get_client_by_id(args.data.client_id)
           if client and client.name == "echo_lsp" then
             local bufnr = args.buf
+
+            -- Trigger ghost text
             vim.keymap.set("i", "<C-n>", trigger_ghost_text, {
               buffer = bufnr,
               desc = "Trigger Ghost Text",
             })
+
+            -- Accept ghost text
+            vim.keymap.set("i", "<Tab>", function()
+              local state = vim.g._echo_lsp_ghost_state
+              if state and state.extmark() then
+                state.insert()
+              else
+                vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Tab>", true, false, true), "n", true)
+              end
+            end, { buffer = bufnr, desc = "Accept Ghost Text" })
           end
         end,
       })
