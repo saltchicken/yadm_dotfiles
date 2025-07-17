@@ -11,4 +11,5 @@ return {
       { "<leader>?", "<cmd>VimCoach<cr>", desc = "Vim Coach" },
     },
   },
+  { "saltchicken/file-selector.nvim" },
 }
