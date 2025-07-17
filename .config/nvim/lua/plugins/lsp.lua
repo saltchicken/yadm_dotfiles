@@ -74,7 +74,7 @@ return {
           -- Set the ghost text at cursor position
           vim.api.nvim_buf_set_extmark(bufnr, ns, line, cursor_col, {
             virt_text = { { text, "Comment" } },
-            virt_text_pos = "overlay", -- This positions it right at the cursor
+            virt_text_pos = "inline", -- This inserts the text inline at the cursor
           })
         end
       end
