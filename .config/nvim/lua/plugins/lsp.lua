@@ -64,11 +64,19 @@ return {
         -- Clear previous ghost text on this line
         vim.api.nvim_buf_clear_namespace(bufnr, ns, line, line + 1)
 
-        -- Set the ghost text
-        vim.api.nvim_buf_set_extmark(bufnr, ns, line, 0, {
-          virt_text = { { text, "Comment" } },
-          virt_text_pos = "eol",
-        })
+        -- Get current cursor position
+        local cursor_pos = vim.api.nvim_win_get_cursor(0)
+        local cursor_col = cursor_pos[2]
+
+        -- Only show ghost text if we're on the same line as the cursor
+        local current_line = cursor_pos[1] - 1 -- Convert to 0-based
+        if line == current_line then
+          -- Set the ghost text at cursor position
+          vim.api.nvim_buf_set_extmark(bufnr, ns, line, cursor_col, {
+            virt_text = { { text, "Comment" } },
+            virt_text_pos = "overlay", -- This positions it right at the cursor
+          })
+        end
       end
 
       return opts
