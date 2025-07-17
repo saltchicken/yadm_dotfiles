@@ -78,13 +78,24 @@ return {
 
       -- Clear ghost text on any insert-related action
       vim.api.nvim_create_autocmd({ "InsertCharPre", "CursorMovedI", "TextChangedI", "InsertLeave" }, {
-        callback = function()
+        callback = function(args)
           if ghost_extmark and ghost_bufnr then
             vim.api.nvim_buf_clear_namespace(ghost_bufnr, ghost_ns, 0, -1)
             ghost_extmark = nil
             ghost_text = ""
             ghost_line = nil
             ghost_bufnr = nil
+          end
+          local bufnr = args.buf
+          local clients = vim.lsp.get_active_clients({ bufnr = bufnr })
+          local uri = vim.uri_from_bufnr(bufnr)
+
+          for _, client in ipairs(clients) do
+            if client.name == "echo_lsp" then
+              client.notify("$/cancelGhostText", {
+                textDocument = { uri = uri },
+              })
+            end
           end
         end,
       })
