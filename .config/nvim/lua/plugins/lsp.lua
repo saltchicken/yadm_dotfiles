@@ -92,9 +92,7 @@ return {
 
           for _, client in ipairs(clients) do
             if client.name == "echo_lsp" then
-              client.notify("$/cancelGhostText", {
-                textDocument = { uri = uri },
-              })
+              client.notify("$/cancelGhostText")
             end
           end
         end,
