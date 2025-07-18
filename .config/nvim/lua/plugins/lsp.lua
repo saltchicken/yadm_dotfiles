@@ -126,9 +126,12 @@ return {
           if ghost_extmark and ghost_bufnr and ghost_line then
             local line_content = vim.api.nvim_buf_get_lines(ghost_bufnr, ghost_line, ghost_line + 1, false)[1]
             local cursor_col = vim.api.nvim_win_get_cursor(0)[2]
-            local new_line = line_content:sub(1, cursor_col) .. ghost_text .. line_content:sub(cursor_col + 1)
+            local ghost_first_line = vim.split(ghost_text, "\n", { plain = true })[1]
+            local new_line = line_content:sub(1, cursor_col) .. ghost_first_line .. line_content:sub(cursor_col + 1)
+            -- local new_line = line_content:sub(1, cursor_col) .. ghost_text .. line_content:sub(cursor_col + 1)
             local lines = vim.split(new_line, "\n", { plain = true })
-            vim.api.nvim_buf_set_lines(ghost_bufnr, ghost_line, ghost_line + #lines, false, lines)
+            -- vim.api.nvim_buf_set_lines(ghost_bufnr, ghost_line, ghost_line + #lines, false, lines)
+            vim.api.nvim_buf_set_lines(ghost_bufnr, ghost_line, ghost_line + 1, false, { new_line })
             -- vim.api.nvim_buf_set_lines(ghost_bufnr, ghost_line, ghost_line + 1, false, { new_line })
             vim.api.nvim_buf_clear_namespace(ghost_bufnr, ghost_ns, 0, -1)
             ghost_extmark = nil
