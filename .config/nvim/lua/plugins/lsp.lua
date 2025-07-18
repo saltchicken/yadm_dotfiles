@@ -160,11 +160,12 @@ return {
 
         local pos = vim.api.nvim_win_get_cursor(0)
         local line = pos[1] - 1
+        local character = pos[2]
         local uri = vim.uri_from_bufnr(bufnr)
 
         echo_client.request("custom/triggerGhostText", {
           textDocument = { uri = uri },
-          position = { line = line, character = 0 },
+          position = { line = line, character = character },
         }, function(err, result)
           if err then
             vim.notify("Error triggering ghost text: " .. tostring(err), vim.log.levels.ERROR)
