@@ -7,9 +7,14 @@ return {
   {
     "neovim/nvim-lspconfig",
     opts = function(_, opts)
-      local lspconfig = require("lspconfig")
-      local configs = require("lspconfig.configs")
+      opts.diagnostics = {
+        virtual_lines = true,
+        underline = true,
+        update_in_insert = false,
+        virtual_text = false,
+      }
 
+      local configs = require("lspconfig.configs")
       if not configs.echo_lsp then
         configs.echo_lsp = {
           default_config = {
@@ -32,13 +37,6 @@ return {
       opts.servers = vim.tbl_extend("force", opts.servers or {}, {
         echo_lsp = {},
       })
-
-      opts.diagnostics = {
-        virtual_lines = true,
-        underline = true,
-        update_in_insert = false,
-        virtual_text = false,
-      }
 
       -- Ghost Text Handler Setup
       local ghost_ns = vim.api.nvim_create_namespace("echo_lsp_ghost_text")
