@@ -10,12 +10,12 @@ return {
   {
     "neovim/nvim-lspconfig",
     opts = function(_, opts)
-      opts.diagnostics = {
-        virtual_lines = true,
-        underline = true,
-        update_in_insert = false,
-        virtual_text = false,
-      }
+      -- opts.diagnostics = {
+      --   virtual_lines = true,
+      --   underline = true,
+      --   update_in_insert = false,
+      --   virtual_text = false,
+      -- }
 
       local configs = require("lspconfig.configs")
       if not configs.echo_lsp then
