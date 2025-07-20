@@ -40,7 +40,7 @@ return {
 
       -- Ghost Text Handler Setup
       local ghost_ns = vim.api.nvim_create_namespace("echo_lsp_ghost_text")
-      local ghost_extmark = nil
+      local ghost_extmarks = {}
       local ghost_text = ""
       local ghost_line = nil
       local ghost_bufnr = nil
@@ -62,31 +62,38 @@ return {
         local cursor_col = cursor_pos[2]
 
         vim.api.nvim_buf_clear_namespace(bufnr, ghost_ns, 0, -1)
+        ghost_extmarks = {}
 
-        if line == cursor_line then
-          ghost_extmark = vim.api.nvim_buf_set_extmark(bufnr, ghost_ns, line, cursor_col, {
-            virt_text = { { text, "Comment" } },
+        local lines = vim.split(text, "\n", { plain = true })
+
+        if #lines > 0 then
+          local ghost_line_text = lines[1]
+          local extmark = vim.api.nvim_buf_set_extmark(bufnr, ghost_ns, line, cursor_col, {
+            virt_text = { { ghost_line_text, "Comment" } },
             virt_text_pos = "inline",
+            hl_mode = "combine",
           })
-          ghost_text = text
-          ghost_line = line
-          ghost_bufnr = bufnr
+          ghost_extmarks = { extmark }
+        else
+          ghost_extmarks = {}
         end
+
+        ghost_text = text
+        ghost_line = line
+        ghost_bufnr = bufnr
       end
 
-      -- Clear ghost text on any insert-related action
       vim.api.nvim_create_autocmd({ "InsertCharPre", "CursorMovedI", "TextChangedI", "InsertLeave" }, {
         callback = function(args)
-          if ghost_extmark and ghost_bufnr then
+          if ghost_bufnr then
             vim.api.nvim_buf_clear_namespace(ghost_bufnr, ghost_ns, 0, -1)
-            ghost_extmark = nil
+            ghost_extmarks = {}
             ghost_text = ""
             ghost_line = nil
             ghost_bufnr = nil
           end
           local bufnr = args.buf
           local clients = vim.lsp.get_active_clients({ bufnr = bufnr })
-          local uri = vim.uri_from_bufnr(bufnr)
 
           for _, client in ipairs(clients) do
             if client.name == "echo_lsp" then
@@ -96,11 +103,10 @@ return {
         end,
       })
 
-      -- Shared access from init()
       vim.g._echo_lsp_ghost_state = {
         ns = ghost_ns,
         extmark = function()
-          return ghost_extmark
+          return #ghost_extmarks > 0 and ghost_extmarks or nil
         end,
         text = function()
           return ghost_text
@@ -112,38 +118,40 @@ return {
           return ghost_bufnr
         end,
         clear = function()
-          if ghost_extmark and ghost_bufnr then
+          if ghost_bufnr then
             vim.api.nvim_buf_clear_namespace(ghost_bufnr, ghost_ns, 0, -1)
           end
-          ghost_extmark = nil
+          ghost_extmarks = {}
           ghost_text = ""
           ghost_line = nil
           ghost_bufnr = nil
         end,
         insert = function()
-          if ghost_extmark and ghost_bufnr and ghost_line then
-            local line_content = vim.api.nvim_buf_get_lines(ghost_bufnr, ghost_line, ghost_line + 1, false)[1]
+          if ghost_bufnr and ghost_line then
             local cursor_col = vim.api.nvim_win_get_cursor(0)[2]
-            local new_line = line_content:sub(1, cursor_col) .. ghost_text .. line_content:sub(cursor_col + 1)
-            local lines = vim.split(new_line, "\n", { plain = true })
-            vim.api.nvim_buf_set_lines(ghost_bufnr, ghost_line, ghost_line + #lines, false, lines)
+            local ghost_lines = vim.split(ghost_text, "\n", { plain = true })
 
-            -- Capture cursor target before cleanup
-            local target_line = ghost_line
-            local target_col = cursor_col + #ghost_text
+            local orig_line = vim.api.nvim_buf_get_lines(ghost_bufnr, ghost_line, ghost_line + 1, false)[1] or ""
+            local prefix = orig_line:sub(1, cursor_col)
+            local suffix = orig_line:sub(cursor_col + 1)
 
-            -- Clear ghost state
+            local final_line = prefix .. (ghost_lines[1] or "") .. suffix
+
+            vim.api.nvim_buf_set_lines(ghost_bufnr, ghost_line, ghost_line + 1, false, { final_line })
+
+            -- Save for later use inside vim.schedule
+            local saved_ghost_line = ghost_line
+            local saved_cursor_col = cursor_col
+            local inserted_length = #(ghost_lines[1] or "")
+
             vim.api.nvim_buf_clear_namespace(ghost_bufnr, ghost_ns, 0, -1)
-            ghost_extmark = nil
+            ghost_extmarks = {}
             ghost_text = ""
             ghost_line = nil
             ghost_bufnr = nil
 
-            -- Exit insert mode and move cursor
-            -- vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "n", false)
             vim.schedule(function()
-              vim.api.nvim_win_set_cursor(0, { target_line + 1, target_col })
-              -- vim.api.nvim_feedkeys("i", "n", false)
+              vim.api.nvim_win_set_cursor(0, { saved_ghost_line + 1, saved_cursor_col + inserted_length })
             end)
           end
         end,
@@ -185,20 +193,17 @@ return {
         end, bufnr)
       end
 
-      -- Set keymaps on LSP attach
       vim.api.nvim_create_autocmd("LspAttach", {
         callback = function(args)
           local client = vim.lsp.get_client_by_id(args.data.client_id)
           if client and client.name == "echo_lsp" then
             local bufnr = args.buf
 
-            -- Trigger ghost text
             vim.keymap.set("i", "<C-n>", trigger_ghost_text, {
               buffer = bufnr,
               desc = "Trigger Ghost Text",
             })
 
-            -- Accept ghost text
             vim.keymap.set("i", "<Tab>", function()
               local state = vim.g._echo_lsp_ghost_state
               if state and state.extmark() then
