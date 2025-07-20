@@ -24,8 +24,8 @@ return {
       -- }
 
       local configs = require("lspconfig.configs")
-      if not configs.echo_lsp then
-        configs.echo_lsp = {
+      if not configs.llmcoder then
+        configs.llmcoder = {
           default_config = {
             cmd = {
               vim.fn.stdpath("data") .. "/lazy/llmcoder/scripts/launch.sh",
@@ -44,7 +44,7 @@ return {
       end
 
       opts.servers = vim.tbl_extend("force", opts.servers or {}, {
-        echo_lsp = {},
+        llmcoder = {},
       })
     end,
   },
