@@ -1,14 +1,20 @@
 return {
   {
-    "saltchicken/echo_lsp_server",
+    "saltchicken/llmcoder",
     build = "./scripts/install.sh",
     config = function()
-      require("echo_lsp_server").setup()
+      require("llmcoder").setup({
+        auto_trigger = {
+          enabled = true,
+          delay_ms = 500,
+        },
+      })
     end,
   },
 
   {
     "neovim/nvim-lspconfig",
+
     opts = function(_, opts)
       -- opts.diagnostics = {
       --   virtual_lines = true,
@@ -22,7 +28,7 @@ return {
         configs.echo_lsp = {
           default_config = {
             cmd = {
-              vim.fn.stdpath("data") .. "/lazy/echo_lsp_server/scripts/launch.sh",
+              vim.fn.stdpath("data") .. "/lazy/llmcoder/scripts/launch.sh",
             },
             filetypes = { "text", "markdown", "lua", "python", "javascript", "typescript" },
             root_dir = function(fname)
@@ -32,7 +38,7 @@ return {
             single_file_support = true,
           },
           docs = {
-            description = "Simple Echo LSP Server for testing",
+            description = "LLM Coder",
           },
         }
       end
