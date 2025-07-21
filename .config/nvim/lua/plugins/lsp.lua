@@ -28,9 +28,12 @@ return {
       if not configs.llmcoder then
         configs.llmcoder = {
           default_config = {
+
             cmd = {
               vim.fn.stdpath("data") .. "/lazy/llmcoder/scripts/launch.sh",
+              "http://main:8000/generate",
             },
+
             filetypes = { "text", "markdown", "lua", "python", "javascript", "typescript" },
             root_dir = function(fname)
               return vim.fn.getcwd()
