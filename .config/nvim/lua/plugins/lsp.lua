@@ -8,6 +8,7 @@ return {
           enabled = true,
           delay_ms = 500,
         },
+        llm_api_url = "http://main:8000/generate",
       })
     end,
   },
