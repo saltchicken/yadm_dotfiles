@@ -12,11 +12,8 @@ return {
         hl.StatusLineNC = { bg = "#1E2229" }
       end,
     },
-  },
-  {
-    "LazyVim/LazyVim",
-    opts = {
-      colorscheme = "solarized-osaka",
-    },
+    config = function()
+      vim.cmd.colorscheme("solarized-osaka")
+    end,
   },
 }
