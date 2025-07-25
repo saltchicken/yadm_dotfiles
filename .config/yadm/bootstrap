@@ -1,5 +1,5 @@
 sudo apt update && sudo apt upgrade -y
-sudo apt install git curl zsh ffmpeg 7zip jq poppler-utils fd-find ripgrep fzf zoxide imagemagick gcc kitty hyprland thunar tmux wofi mpv grim slurp hyprpaper openssh-server sshfs build-essential
+sudo apt install git curl zsh ffmpeg 7zip jq poppler-utils fd-find ripgrep fzf zoxide imagemagick gcc kitty hyprland thunar tmux wofi mpv grim slurp hyprpaper openssh-server sshfs build-essential wl-clipboard
 sudo ubuntu-drivers install
 
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
@@ -9,6 +9,7 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
 sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz
 sudo ln -s /opt/nvim-linux-x86_64/bin/nvim /usr/local/bin/nvim
+rm nvim-linux-x86_64.tar.gz
 
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
@@ -19,10 +20,14 @@ LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/re
 curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/download/v${LAZYGIT_VERSION}/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
 tar xf lazygit.tar.gz lazygit
 sudo install lazygit -D -t /usr/local/bin/
+rm lazygit.tar.gz lazygit
 
 chsh -s $(which zsh)
 
 fc-cache -fv
+
+git config --global user.name "saltchicken"
+git config --global user.email "john.eicher89@gmail.com"
 
 ssh-keygen -t ed25519
 
