@@ -1,5 +1,5 @@
 sudo apt update && sudo apt upgrade -y
-sudo apt install git curl zsh ffmpeg 7zip jq poppler-utils fd-find ripgrep fzf zoxide imagemagick gcc kitty hyprland thunar tmux wofi mpv grim slurp hyprpaper openssh-server sshfs build-essential wl-clipboard
+sudo apt install git curl zsh ffmpeg 7zip jq poppler-utils fd-find ripgrep fzf zoxide imagemagick gcc kitty hyprland thunar tmux wofi mpv grim slurp hyprpaper openssh-server sshfs build-essential wl-clipboard pavucontrol pipewire wireplumber
 sudo ubuntu-drivers install
 
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
@@ -65,3 +65,4 @@ systemctl --user start sshfs-mount.service
 systemctl --user enable tmux.service
 systemctl --user start tmux.service
 
+systemctl --user enable --now pipewire pipewire-pulse wireplumber
