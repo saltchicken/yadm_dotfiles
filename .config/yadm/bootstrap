@@ -26,8 +26,13 @@ chsh -s $(which zsh)
 
 fc-cache -fv
 
-git config --global user.name "saltchicken"
-git config --global user.email "john.eicher89@gmail.com"
+while [[ -z "$git_name" ]]; do
+  read -p "Enter your Git user.name: " git_name
+done
+
+while [[ -z "$git_email" ]]; do
+  read -p "Enter your Git user.email: " git_email
+done
 
 ssh-keygen -t ed25519
 
