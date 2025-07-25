@@ -21,6 +21,9 @@ end, { desc = "Show Dashboard" })
 
 vim.keymap.set("n", "<leader>db", ":DBUIToggle<CR>", { desc = "Open DBUI" })
 
+vim.keymap.set({ "n", "v" }, "y", '"+y', { noremap = true })
+vim.keymap.set("n", "yy", '"+yy', { noremap = true })
+
 -- local echo_lsp_config = {
 --   name = "echo_lsp",
 --   cmd = { vim.fn.stdpath("data") .. "/lazy/llmcoder/scripts/launch.sh" },
