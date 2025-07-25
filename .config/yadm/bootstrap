@@ -1,4 +1,6 @@
-sudo apt install git curl zsh ffmpeg 7zip jq poppler-utils fd-find ripgrep fzf zoxide imagemagick gcc kitty hyprland thunar tmux wofi mpv grim slurp hyprpaper xsel openssh-server sshfs
+sudo apt update && sudo apt upgrade -y
+sudo apt install git curl zsh ffmpeg 7zip jq poppler-utils fd-find ripgrep fzf zoxide imagemagick gcc kitty hyprland thunar tmux wofi mpv grim slurp hyprpaper openssh-server sshfs build-essential
+sudo ubuntu-drivers install
 
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
@@ -36,6 +38,7 @@ ssh-copy-id master
 sudo systemctl enable ssh
 sudo systemctl start ssh
 
+mkdir ~/workspace
 systemctl --user daemon-reload
 systemctl --user enable sshfs-mount.service
 systemctl --user start sshfs-mount.service
