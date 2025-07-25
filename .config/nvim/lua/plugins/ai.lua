@@ -52,5 +52,5 @@ return {
   --   end,
   -- },
 
-  -- { "augmentcode/augment.vim" },
+  { "augmentcode/augment.vim" },
 }
