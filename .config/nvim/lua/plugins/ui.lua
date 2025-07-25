@@ -54,20 +54,20 @@ return {
       { "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
     },
   },
-  {
-    "ojroques/nvim-osc52",
-    config = function()
-      require("osc52").setup({
-        max_length = 0, -- 0 = no limit
-        trim = false,
-        silent = false,
-      })
-      vim.keymap.set("v", "y", function()
-        if vim.fn.mode() == "v" then
-          require("osc52").copy_visual()
-        end
-        return "y"
-      end, { expr = true, noremap = true })
-    end,
-  },
+  -- {
+  --   "ojroques/nvim-osc52",
+  --   config = function()
+  --     require("osc52").setup({
+  --       max_length = 0, -- 0 = no limit
+  --       trim = false,
+  --       silent = false,
+  --     })
+  --     vim.keymap.set("v", "y", function()
+  --       if vim.fn.mode() == "v" then
+  --         require("osc52").copy_visual()
+  --       end
+  --       return "y"
+  --     end, { expr = true, noremap = true })
+  --   end,
+  -- },
 }
