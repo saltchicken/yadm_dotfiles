@@ -38,3 +38,6 @@ systemctl --user daemon-reload
 systemctl --user enable sshfs-mount.service
 systemctl --user start sshfs-mount.service
 
+systemctl --user enable tmux.service
+systemctl --user start tmux.service
+
