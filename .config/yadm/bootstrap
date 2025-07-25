@@ -1,4 +1,4 @@
-sudo apt install git curl zsh ffmpeg 7zip jq poppler-utils fd-find ripgrep fzf zoxide imagemagick gcc kitty hyprland thunar tmux wofi mpv grim slurp hyprpaper xsel sshfs
+sudo apt install git curl zsh ffmpeg 7zip jq poppler-utils fd-find ripgrep fzf zoxide imagemagick gcc kitty hyprland thunar tmux wofi mpv grim slurp hyprpaper xsel openssh-server sshfs
 
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
@@ -27,6 +27,9 @@ echo "$IP $HOSTNAME" | sudo tee -a "$HOSTS_FILE" > /dev/null
 echo "Set $HOSTNAME to $IP in $HOSTS_FILE"
 
 ssh-copy-id master
+
+sudo systemctl enable ssh
+sudo systemctl start ssh
 
 systemctl --user daemon-reload
 systemctl --user enable sshfs-mount.service
