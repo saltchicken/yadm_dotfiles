@@ -21,6 +21,20 @@ end, { desc = "Show Dashboard" })
 
 vim.keymap.set("n", "<leader>db", ":DBUIToggle<CR>", { desc = "Open DBUI" })
 
+vim.opt.clipboard = "unnamedplus"
+
+vim.g.clipboard = {
+  name = "wl-clipboard",
+  copy = {
+    ["+"] = "wl-copy",
+    ["*"] = "wl-copy",
+  },
+  paste = {
+    ["+"] = "wl-paste --no-newline",
+    ["*"] = "wl-paste --no-newline",
+  },
+  cache_enabled = 0,
+}
 -- vim.keymap.set({ "n", "v" }, "y", '"+y', { noremap = true })
 -- vim.keymap.set("n", "yy", '"+yy', { noremap = true })
 
