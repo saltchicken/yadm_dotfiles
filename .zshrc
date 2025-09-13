@@ -15,3 +15,5 @@ eval "$(zoxide init zsh)"
 # Use emacs keybindings even if our EDITOR is set to vi
 # bindkey -e
 set -o vi
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
