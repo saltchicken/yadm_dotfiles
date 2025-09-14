@@ -54,6 +54,40 @@ return {
       { "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
     },
   },
+  {
+    "saltchicken/keep.nvim",
+    config = function()
+      local keep = require("keep")
+
+      keep.setup({
+        notes_dir = "~/workspace/my-notes/",
+
+        float_opts = {
+          width = 100,
+          height = 30,
+          border = "rounded",
+          title = "My Notes",
+          title_pos = "center",
+        },
+      })
+
+      -- Snacks Explorer integration
+      vim.keymap.set("n", "<leader>kn", function()
+        require("snacks").explorer.open({
+          cwd = vim.fn.expand("~/workspace/my-notes/"),
+          layout = "left",
+          width = 30,
+          on_open = function(item)
+            -- tell keep.nvim to open the note in floating window
+            keep.open_notes_with(item.path)
+          end,
+        })
+      end, { desc = "Open Notes Explorer" })
+    end,
+    dependencies = {
+      "folke/snacks.nvim", -- sidebar explorer
+    },
+  },
   -- {
   --   "ojroques/nvim-osc52",
   --   config = function()
