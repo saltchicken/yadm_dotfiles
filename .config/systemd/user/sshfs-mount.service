@@ -8,8 +8,8 @@ StartLimitIntervalSec=30
 [Service]
 Type=simple
 RemainAfterExit=yes
-ExecStart=/usr/bin/sshfs -o reconnect,ServerAliveInterval=15,ServerAliveCountMax=3 master:/home/saltchicken/workspace /home/saltchicken/workspace
-ExecStop=/bin/fusermount -uz /home/saltchicken/workspace
+ExecStart=/usr/bin/sshfs -o reconnect,ServerAliveInterval=15,ServerAliveCountMax=3 master:/home/saltchicken/.master /home/saltchicken/.master
+ExecStop=/bin/fusermount -uz /home/saltchicken/.master
 Restart=on-failure
 RestartSec=5
 
