@@ -57,7 +57,7 @@ ssh-copy-id master
 sudo systemctl enable ssh
 sudo systemctl start ssh
 
-mkdir ~/workspace
+mkdir ~/.master
 systemctl --user daemon-reload
 systemctl --user enable sshfs-mount.service
 systemctl --user start sshfs-mount.service
