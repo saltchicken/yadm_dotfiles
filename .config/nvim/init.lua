@@ -1,7 +1,7 @@
 -- bootstrap lazy.nvim, LazyVim and your plugins
 require("config.lazy")
 -- vim.g.augment_workspace_folders = { "~/workspace/rust_sandbox/" }
-vim.g.db_ui_save_location = "~/workspace/db_ui"
+vim.g.db_ui_save_location = "~/.master/db_ui"
 
 vim.opt.laststatus = 0
 

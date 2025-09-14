@@ -60,7 +60,7 @@ return {
       local keep = require("keep")
 
       keep.setup({
-        dir = "~/workspace/my-notes/",
+        dir = "~/.master/my-notes/",
       })
     end,
     dependencies = {
