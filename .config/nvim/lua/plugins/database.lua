@@ -29,7 +29,7 @@ return {
           -- add vim-dadbod-completion to your completion providers
           providers = {
             dadbod = { name = "Dadbod", module = "vim_dadbod_completion.blink" },
-            codeium = { name = "Codeium", module = "codeium.blink", async = true },
+            -- codeium = { name = "Codeium", module = "codeium.blink", async = true },
           },
         },
       },
