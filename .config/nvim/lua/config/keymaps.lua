@@ -3,23 +3,19 @@
 --
 -- vim.keymap.set("n", "<leader>at", ":Augment chat-toggle<CR>", { noremap = true, silent = true })
 -- vim.keymap.set("v", "<leader>at", ":Augment chat-toggle<CR>", { noremap = true, silent = true })
-vim.keymap.set("i", "<A-f>", function()
-  require("neocodeium").accept()
-end)
-vim.keymap.set("i", "<A-w>", function()
-  require("neocodeium").accept_word()
-end)
-vim.keymap.set("i", "<A-a>", function()
-  require("neocodeium").accept_line()
-end)
-vim.keymap.set("i", "<A-e>", function()
+--
+-- vim.keymap.set("i", "<C-f>", "<Nop>", { noremap = true, silent = true })
+--
+
+vim.keymap.set("i", "<C-f>", require("neocodeium").accept)
+vim.keymap.set("i", "<C-l>", require("neocodeium").accept_line)
+vim.keymap.set("i", "<C-Right>", require("neocodeium").accept_word)
+vim.keymap.set("i", "<C-Left>", require("neocodeium").clear)
+vim.keymap.set("i", "<C-Down>", function()
   require("neocodeium").cycle_or_complete()
 end)
-vim.keymap.set("i", "<A-r>", function()
+vim.keymap.set("i", "<C-Up>", function()
   require("neocodeium").cycle_or_complete(-1)
-end)
-vim.keymap.set("i", "<A-c>", function()
-  require("neocodeium").clear()
 end)
 
 vim.keymap.set("n", "<Tab>", "<cmd>BufferLineCycleNext<CR>", {})
