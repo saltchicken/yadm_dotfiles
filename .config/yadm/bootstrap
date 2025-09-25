@@ -1,5 +1,5 @@
 sudo apt update && sudo apt upgrade -y
-sudo apt install git curl zsh ffmpeg 7zip jq poppler-utils fd-find ripgrep fzf zoxide imagemagick gcc kitty hyprland thunar tmux wofi mpv grim slurp hyprpaper openssh-server sshfs build-essential wl-clipboard pavucontrol pipewire wireplumber
+sudo apt install git curl fish nautilus ffmpeg 7zip jq poppler-utils fd-find ripgrep fzf imagemagick gcc kitty hyprland tmux wofi mpv grim slurp hyprpaper openssh-server sshfs build-essential wl-clipboard pavucontrol pipewire wireplumber
 sudo ubuntu-drivers install
 
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
@@ -14,18 +14,13 @@ rm nvim-linux-x86_64.tar.gz
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 ~/.tmux/plugins/tpm/bin/install_plugins
 
-git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
-git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-~/.fzf/install
-
-
 LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | \grep -Po '"tag_name": *"v\K[^"]*')
 curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/download/v${LAZYGIT_VERSION}/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
 tar xf lazygit.tar.gz lazygit
 sudo install lazygit -D -t /usr/local/bin/
 rm lazygit.tar.gz lazygit
 
-chsh -s $(which zsh)
+chsh -s $(which fish)
 
 fc-cache -fv
 
