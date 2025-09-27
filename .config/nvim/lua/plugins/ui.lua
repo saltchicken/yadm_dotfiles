@@ -67,6 +67,7 @@ return {
       "folke/snacks.nvim", -- sidebar explorer
     },
   },
+
   -- {
   --   "ojroques/nvim-osc52",
   --   config = function()
