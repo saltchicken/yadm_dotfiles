@@ -1,0 +1,83 @@
+/* Styles for the Eww Position HUD */
+
+/* Main window container */
+.hud-main {
+  background-color: rgba(30, 30, 46, 0.3); /* Highly transparent dark background */
+  border: 2px solid rgba(137, 180, 250, 0.6); /* Semi-transparent blue border */
+  border-radius: 12px;
+  padding: 15px;
+  font-family: "Inter", sans-serif;
+  width: 100%;
+  height: 100%;
+}
+
+/* HUD title */
+.hud-title {
+  color: #cdd6f4; /* Light, fully opaque text */
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Container for the grid of buttons */
+.grid-container {
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.1); /* Slightly transparent overlay */
+  border-radius: 8px;
+}
+
+/* Standard position buttons */
+.pos-btn {
+  background-color: rgba(69, 71, 90, 0.9); /* Mostly opaque button background */
+  color: #bac2de; /* Fully opaque text */
+  border-radius: 6px;
+  border: 1px solid rgba(127, 132, 156, 0.8);
+  padding: 8px 10px;
+  transition: all 0.2s;
+}
+
+.pos-btn:hover {
+  background-color: rgba(88, 91, 112, 0.95);
+  border-color: rgba(137, 180, 250, 0.8);
+}
+
+/* Labels inside buttons */
+.pos-label {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #a6e3a1;
+}
+
+.pos-text {
+  font-size: 0.8em;
+  color: #cdd6f4;
+}
+
+/* Center button with distinct color */
+.center-btn {
+  background-color: rgba(116, 199, 206, 0.95);
+  border-color: rgba(116, 199, 206, 0.95);
+  color: #1e1e2e;
+  font-weight: bold;
+  padding: 10px 10px;
+}
+
+.center-btn:hover {
+  background-color: rgba(148, 226, 213, 0.95);
+  border-color: rgba(148, 226, 213, 0.95);
+}
+
+/* Close button */
+.close-btn {
+  margin-top: 15px;
+  background-color: rgba(243, 139, 168, 0.95);
+  color: #1e1e2e;
+  border: none;
+  border-radius: 6px;
+  padding: 5px 15px;
+  font-weight: bold;
+}
+
+.close-btn:hover {
+  background-color: rgba(249, 217, 228, 0.95);
+}

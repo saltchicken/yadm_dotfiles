@@ -1,0 +1,91 @@
+(defwindow position_hud
+  :monitor 0
+  :geometry (geometry
+    :x "0px" ; Corrected: Eww requires a length value here.
+    :y "0px" ; Corrected: Eww requires a length value here.
+    :width "50%"
+    :height "50%"
+  )
+  :exclusive false
+  :stacking "toplevel"
+  :wm-ignore false
+  :transparent true
+  (hud_layout)
+)
+
+(defwidget hud_layout []
+  (box 
+    :class "hud-main"
+    :orientation "v"
+    :spacing 10
+    :halign "center"
+    :valign "center"
+    (label :text "Select Position (1-5)" :class "hud-title")
+
+    (box 
+      :class "grid-container"
+      :orientation "v"
+      :spacing 5
+      :halign "center"
+      :valign "center"
+
+      ;; --- Top Row ---
+      (box :orientation "h" :spacing 5
+        (position-button 
+          :label "1" 
+          :text "Top-Left (1280x720)"
+          :class ""
+          :command "dispatch setfloating 1; dispatch resizeactive exact 1280 720; dispatch moveactive exact 0 0"
+        )
+        (position-button 
+          :label "3" 
+          :text "Top-Right (1280x720)"
+          :class ""
+          :command "dispatch setfloating 1; dispatch resizeactive exact 1280 720; dispatch moveactive exact 3840 0"
+        )
+      )
+
+      ;; --- Center ---
+      (position-button 
+        :label "5" 
+        :text "Center (2560x1440)"
+        :class "center-btn"
+        :command "dispatch setfloating 1; dispatch resizeactive exact 2560 1440; dispatch moveactive exact 1280 0"
+      )
+
+      ;; --- Bottom Row ---
+      (box :orientation "h" :spacing 5
+        (position-button 
+          :label "2" 
+          :text "Lower-Left (1280x720)"
+          :class ""
+          :command "dispatch setfloating 1; dispatch resizeactive exact 1280 720; dispatch moveactive exact 0 720"
+        )
+        (position-button 
+          :label "4" 
+          :text "Lower-Right (1280x720)"
+          :class ""
+          :command "dispatch setfloating 1; dispatch resizeactive exact 1280 720; dispatch moveactive exact 3840 720"
+        )
+      )
+    )
+
+    (button 
+      :class "close-btn"
+      :onclick "eww close position_hud" 
+      "Close (Esc)"
+    )
+  )
+)
+
+;; Reusable component for the position buttons
+(defwidget position-button [label text class command]
+  (button 
+    :class "pos-btn ${class}" 
+    :onclick "hyprctl --batch \"${command}\" && eww close position_hud"
+    (box :orientation "v" :spacing 3
+      (label :text label :class "pos-label")
+      (label :text text :class "pos-text")
+    )
+  )
+)
