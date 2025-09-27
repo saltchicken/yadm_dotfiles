@@ -3,13 +3,12 @@
   :geometry (geometry
     :x "0px" ; Corrected: Eww requires a length value here.
     :y "0px" ; Corrected: Eww requires a length value here.
-    :width "50%"
-    :height "50%"
+    :width "100%"
+    :height "100%"
   )
   :exclusive false
-  :stacking "toplevel"
+  :stacking "overlay"
   :wm-ignore false
-  :transparent true
   (hud_layout)
 )
 
