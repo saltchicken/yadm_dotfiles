@@ -27,7 +27,7 @@
     :spacing 10
     :halign "center"
     :valign "center"
-    (label :text "Select Position (1-5)" :class "hud-title")
+    (label :text "Select Position (1-7)" :class "hud-title")
 
     (box 
       :class "grid-container"
@@ -36,7 +36,7 @@
       :halign "center"
       :valign "center"
 
-      ;; --- Top Row ---
+      ;; --- Top Row --- 
       (box :orientation "h" :spacing 5
         (position-button 
           :label "1" 
@@ -52,7 +52,23 @@
         )
       )
 
-      ;; --- Center ---
+      ;; --- Full Height Options (New) ---
+      (box :orientation "h" :spacing 5
+        (position-button 
+          :label "6" 
+          :text "Full-Height Left (1280x1440)"
+          :class ""
+          :command "dispatch setfloating 1; dispatch resizeactive exact 1280 1440; dispatch moveactive exact 0 0"
+        )
+        (position-button 
+          :label "7" 
+          :text "Full-Height Right (1280x1440)"
+          :class ""
+          :command "dispatch setfloating 1; dispatch resizeactive exact 1280 1440; dispatch moveactive exact 2560 0"
+        )
+      )
+
+      ;; --- Center --- 
       (position-button 
         :label "5" 
         :text "Center (2560x1440)"
@@ -60,7 +76,7 @@
         :command "dispatch setfloating 1; dispatch resizeactive exact 2560 1440; dispatch moveactive exact 1280 0"
       )
 
-      ;; --- Bottom Row ---
+      ;; --- Bottom Row --- 
       (box :orientation "h" :spacing 5
         (position-button 
           :label "2" 
@@ -85,7 +101,7 @@
   )
 )
 
-;; Reusable component for the position buttons
+;; Reusable component for the position buttons 
 (defwidget position-button [label text class command]
   (button 
     :class "pos-btn ${class}" 
