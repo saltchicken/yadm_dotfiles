@@ -77,7 +77,7 @@
           :label "7"
           :text "Full-Height Right (1280x1440)"
           :class ""
-          :command "dispatch setfloating 1; dispatch resizeactive exact 1280 1440; dispatch moveactive exact 2560 0"
+          :command "dispatch setfloating 1; dispatch resizeactive exact 1280 1440; dispatch moveactive exact 3840 0"
         )
       )
 
