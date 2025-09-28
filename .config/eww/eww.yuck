@@ -1,14 +1,9 @@
 (defwindow position_hud
   :monitor 0
-  :geometry (geometry
-    :x "2060px"
-    :y "220px"
-    :width "1000px"
-    :height "1000px"
-  )
   :exclusive false
   :stacking "overlay"
-  :wm-ignore false
+  :wm-ignore true
+  :transparent true
   :windowtype "utility"
   :window-properties (
       :name "position_hud" ; Optional, but good practice
