@@ -1,21 +1,18 @@
 (defwindow position_hud
   :monitor 0
   :geometry (geometry
-    :x "0px"
-    :y "0px"
-    :width "100%"
-    :height "100%"
+    :x "2060px"
+    :y "220px"
+    :width "1000px"
+    :height "1000px"
   )
   :exclusive false
   :stacking "overlay"
   :wm-ignore false
-  ;; Add the following line to allow keypresses to be captured.
   :windowtype "utility"
   :window-properties (
       :name "position_hud" ; Optional, but good practice
-      ;; The essential change: set `keyboard-mode` to "exclusive" or "on-demand"
       :gtk-layer-shell-keyboard-mode "exclusive"
-      ;; Setting this to 'exclusive' ensures the overlay gets full keyboard focus.
   )
   (hud_layout)
 )
