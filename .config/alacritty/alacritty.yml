@@ -1,0 +1,38 @@
+# Colors (Your Custom Scheme)
+colors:
+  # Primary colors
+  primary:
+    background: '0x1E2229'
+    foreground: '0x16A085'
+
+  # Cursor colors
+  cursor:
+    text: '0x1E2229' # Uses background color
+    cursor: '0x44853A'
+
+  # Selection colors
+  selection:
+    text: '0x001e26'
+    background: '0xFF2731'
+
+  # Normal colors
+  normal:
+    black:   '0x002731'
+    red:     '0xd01b24'
+    green:   '0x728905'
+    yellow:  '0xa57705'
+    blue:    '0x2075c7'
+    magenta: '0xc61b6e'
+    cyan:    '0x259185'
+    white:   '0xe9e2cb'
+
+  # Bright colors
+  bright:
+    black:   '0x16D885'
+    red:     '0xbd3612'
+    green:   '0x465a61'
+    yellow:  '0x52676f'
+    blue:    '0x708183'
+    magenta: '0x5856b9'
+    cyan:    '0x81908f'
+    white:   '0xfcf4dc'
